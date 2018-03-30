@@ -25,4 +25,11 @@ class MoviesController < ApplicationController
   def movie_params
     params.require(:movie).permit(:content)
   end
+  
+  def correct_user
+    @movie = current_user.movies.find_by(id: params[:id])
+    unless @movie
+      redirect_to root_url
+    end
+  end  
 end
