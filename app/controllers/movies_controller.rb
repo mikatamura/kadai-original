@@ -8,7 +8,7 @@ class MoviesController < ApplicationController
       flash[:success] = 'コメントを投稿しました。'
       redirect_to root_url
     else
-      @movies = current_user.movies.order('created_at DESC').page(params[:page])
+      @movies = current_user.feed_movies.order('created_at DESC').page(params[:page])
       flash.now[:danger] = 'コメントの投稿に失敗しました。'
       render 'toppages/index'
     end
