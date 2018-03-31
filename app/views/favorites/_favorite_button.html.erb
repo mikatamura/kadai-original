@@ -1,4 +1,5 @@
-<% if current_user.already_like?(movie) %>
+<% if movie.present? %>
+ <% if current_user.already_like?(movie) %>
   <%= form_for(current_user.favorites.find_by(movie_id: movie.id), html: { method: :delete, style: 'display: inline;'  }) do |f| %>
      <%= hidden_field_tag :movie_id, movie.id %>
      <%= f.submit 'unfavorite', class: 'btn btn-danger btn-xs' %>
@@ -8,4 +9,5 @@
       <%= hidden_field_tag :movie_id, movie.id %>
       <%= f.submit 'favorite', class: 'btn btn-warning btn-xs' %>    
   <% end %>  
-<% end %>
+ <% end %>
+<% end %> 
