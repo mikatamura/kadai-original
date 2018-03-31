@@ -1,0 +1,23 @@
+<% if favorites.any? %>
+  <ul class="media-list">
+      <% favorites.each do |movie| %>
+        <li class="media">
+            <div class="media-left">
+                <img class="media-object img-rounded" src="<%= gravatar_url(user, { size: 50 }) %>" alt="">
+            </div>
+            <div class="media-body">
+                <div>
+                    <%= movie.content %>
+                </div>
+                <div>
+                  <%= link_to "favorite", root_url, method: :get, data: { confirm: "You sure?" }, class: "btn btn-primary btn-xs" %>
+                  <% if current_user == favorite.user %>
+                    <%= link_to "Delate", movie, method: :deleate, data: { confirm: "You sure?" }, class: "btn btn-danger btn-xs" %>
+                  <% end %>
+                </div>
+            </div>
+        </li>
+      <% end %>
+    </ul>
+    <%= paginate favorites %>
+<% end %>

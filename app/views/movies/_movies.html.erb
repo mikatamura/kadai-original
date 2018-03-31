@@ -12,6 +12,9 @@
           <p><%= movie.content %></p>
         </div>
         <div>
+          <%= render 'favorites/favorite_button', movie: movie %>
+        </div>
+        <div>
           <% if current_user == movie.user %>
             <%= link_to "Delete", movie, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-xs' %>
           <% end %>

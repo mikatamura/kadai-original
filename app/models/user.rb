@@ -11,6 +11,8 @@ class User < ApplicationRecord
   has_many :followings, through: :relationships, source: :follow
   has_many :reverses_of_relationship, class_name: 'Relationship', foreign_key: 'follow_id'
   has_many :followers, through: :reverses_of_relationship, source: :user
+  has_many :favorites
+  has_many :favorite_movies, through: :favorites, source: :movie
   
   def follow(other_user)
     unless self == other_user
@@ -28,6 +30,19 @@ class User < ApplicationRecord
   end
   
   def feed_movies
-    Movies.where(user_id: self.following_ids + [self.id])
+    Movie.where(user_id: self.following_ids + [self.id])
+  end
+  
+  def like(movie)
+    self.favorites.find_or_create_by(@movie)
+  end
+  
+  def dislike(movie)
+    favorite = self.favorites.find_by(@movie)
+    favorite.destroy if favorite.present?
+  end
+  
+  def already_like?(movie)
+    self.favorite_movies.include?(movie)
   end
 end
